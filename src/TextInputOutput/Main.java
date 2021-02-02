@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException{
+    public static void main(String[] args) {
         // instruction
         /*
         perskaityti duomenis is treju failu po eilute

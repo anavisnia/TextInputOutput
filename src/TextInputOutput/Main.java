@@ -1,6 +1,9 @@
 package TextInputOutput;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -11,10 +14,11 @@ public class Main {
         perskaityti duomenis is treju failu po eilute
         suskaldyti eilutes i zodzius
         sudeti viska i bendra sarasa
-        surusioti sarasa zodzio rumpejimo tvarka
+        surusioti sarasa zodzio trumpejimo tvarka
         visus zodzius surasyti i nauja faila
          */
         try (
+                // Input
             FileInputStream fis = new FileInputStream("a.txt");
             FileInputStream fis2 = new FileInputStream("b.txt");
             FileInputStream fis3 = new FileInputStream("c.txt");
@@ -24,57 +28,53 @@ public class Main {
             BufferedReader br = new BufferedReader(fr); // skaitys koda po eilute
             BufferedReader br2 = new BufferedReader(fr2);
             BufferedReader br3 = new BufferedReader(fr3);
-
+            // Output
+            FileOutputStream fos = new FileOutputStream("d.txt"); // failas kur reikia ikelti info
+            Writer fw = new OutputStreamWriter(fos, "UTF-8");
+            BufferedWriter bw = new BufferedWriter(fw);
         ) {
-           String s;
-            while((s = br.readLine()) != null) {
-                System.out.println(s); // po eilute spausdina
+           String st;
+           String [] parts;
+            List<String> l = new ArrayList();
+            while((st = br.readLine()) != null) {
+                System.out.println(st); // po eilute spausdina
+                for (String s1 : parts = st.split(" ")) {
+                    l.add(s1); // ideda i ArrayLista
+                }
             }
             System.out.println("-------------------");
-            String s2;
-            while((s2 = br2.readLine()) != null) {
-                System.out.println(s2); // po eilute
+            String st2;
+            while((st2 = br2.readLine()) != null) {
+                System.out.println(st2); // po eilute
+                for (String s1 : parts = st2.split(" ")) {
+                    l.add(s1); // papildo ArrayLista
+                }
             }
             System.out.println("-------------------");
-            String s3;
-            while((s3 = br3.readLine()) != null) {
-                System.out.println(s3); // po eilute
+            String st3;
+            while((st3 = br3.readLine()) != null) {
+                System.out.println(st3); // po eilute
+                for (String s1 : parts = st3.split(" ")) {
+                    l.add(s1); // papildo ArrayLista
+                }
             }
-//            int b;
-//            while((b = fr.read()) != -1) {
-//                char c = (char) b;
-//                System.out.println(c);
-//                fos.write(b);
-//            }
+            // surusiavo visa ArrayLista (su duomenemis is pirmo, antro ir trecio teksto)
+            l.sort((s1, s2) -> s2.length() - s1.length());
+            System.out.println(l);
+
+            // is arraylist'o i d.txt fila
+            for(int i = 0; i < l.size(); i++) {
+                String fileData = l.get(i).toString();
+                fw.write(fileData);
+                if( i < l.size() - 1) { // kad nesulipintiu zodzius i viena ilga zodi
+                    fw.write(", ");
+                }
+            }
+            fw.close();
+            bw.close();
         }catch(IOException ex) {
             System.out.println("Error reading file: " + ex.getMessage());
         }
 
-
-
-
-        /*
-        Scanner sc = new Scanner(System.in);
-        String line = sc.nextLine();
-        FileOutputStream fos = null;
-        BufferedWriter bw = null;
-        Writer fw = null;
-
-
-        try {
-            fos = new FileOutputStream("d.txt");
-        } catch (FileNotFoundException ex) {
-            System.out.println("Failo nepavyko gauti: " + ex);
-            ex.printStackTrace();
-        }
-        try{
-            fw = new OutputStreamWriter(fos, "UTF-8");
-        } catch (UnsupportedEncodingException ex) {
-            System.out.println("Neapvyko pakeisti failo:" + ex);
-            ex.printStackTrace();
-        }
-        bw = new BufferedWriter(fw);
-
-         */
     }
 }

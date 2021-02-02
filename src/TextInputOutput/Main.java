@@ -17,6 +17,7 @@ public class Main {
         surusioti sarasa zodzio trumpejimo tvarka
         visus zodzius surasyti i nauja faila
          */
+        // try-with-resources, nereikia uzdaryti failus pvz fos.close();
         try (
                 // Input
             FileInputStream fis = new FileInputStream("a.txt");
@@ -70,8 +71,6 @@ public class Main {
                     fw.write(", ");
                 }
             }
-            fw.close();
-            bw.close();
         }catch(IOException ex) {
             System.out.println("Error reading file: " + ex.getMessage());
         }
